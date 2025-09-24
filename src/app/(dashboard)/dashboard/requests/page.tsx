@@ -5,15 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Request } from '@/features/request/models/Request';
 
-const RequestPage = () => {
-  const [requests, setRequests] = useState<Request[]>([]);
-  const [filteredRequests, setFilteredRequests] = useState<Request[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [typeFilter, setTypeFilter] = useState<string>('all');
-
-  // Mock data - replace with actual API call
-  const mockRequests: Request[] = [
+const mockRequests: Request[] = [
     new Request(
       '1',
       'user123',
@@ -76,6 +68,16 @@ const RequestPage = () => {
     )
   ];
 
+const RequestPage = () => {
+  const [requests, setRequests] = useState<Request[]>([]);
+  const [filteredRequests, setFilteredRequests] = useState<Request[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [typeFilter, setTypeFilter] = useState<string>('all');
+
+  // Mock data - replace with actual API call
+  
+
   useEffect(() => {
     // Simulate API loading
     const loadRequests = async () => {
@@ -87,7 +89,7 @@ const RequestPage = () => {
     };
 
     loadRequests();
-  }, [mockRequests]);
+  }, []);
 
   useEffect(() => {
     let filtered = requests;
