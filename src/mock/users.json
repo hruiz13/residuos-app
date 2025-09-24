@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "nombres": "Juan",
+    "apellidos": "Gómez",
+    "email": "admin@mail.com",
+    "tipoDni": "DNI",
+    "numeroDni": "12345678",
+    "direccion": "Calle Falsa 123",
+    "codigoIndicativo": "LIMA01",
+    "celular": "987654321",
+    "puntosAcumulados": 150,
+    "password": "123456",
+    "role": "admin"
+  }
+]
