@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { login } from '../datasource/login';
 import { User } from '../models/User';
 import { register } from '../datasource/register';
+import { getCollectors } from '../datasource/getCollectors';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -13,6 +14,7 @@ interface AuthState {
   register: (userData: Partial<User>) => Promise<boolean>;
   loginError: string | null;
   registerError: string | null;
+  getCollectors: () => Promise<User[]>;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -64,6 +66,9 @@ export const useAuthStore = create<AuthState>()(
           loginError: null,
           registerError: null,
         }),
+      getCollectors: async() => {
+        return await getCollectors()
+      }
     }),
     {
       name: 'residuos-auth-storage',

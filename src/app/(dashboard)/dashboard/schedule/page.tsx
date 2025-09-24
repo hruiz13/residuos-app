@@ -139,7 +139,8 @@ const Schedule = () => {
       pesoResiduo: 0,
       putosObtenidos: 0,
       tipoResiduo: formData.tipoResiduo,
-      id: crypto.randomUUID()
+      id: crypto.randomUUID(),
+      collectorId: ''
     })
     
     

@@ -7,11 +7,13 @@ interface RequestStoreState {
   createRequest: (request: Request) => void;
   cancelRequest: (id: string) => void;
   setPointsRequest: (id: string, points: number) => void;
+  getPendingRequests: () => Promise<Request[]>;
+  setCollectorId: (id: string, collectorId: string) => Promise<void>;
 }
 
 export const useRequestStore = create<RequestStoreState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       requests: [],
       createRequest: (request) =>
         set((state) => ({
@@ -29,6 +31,16 @@ export const useRequestStore = create<RequestStoreState>()(
             req.id === id ? { ...req, putosObtenidos:points } : req
           ),
         })),
+      getPendingRequests: async() => {
+        return get().requests.filter((req) => req.estado === 'pending' && !req.collectorId);
+      },
+      setCollectorId: async (id, collectorId) => {
+        set((state) => ({
+          requests: state.requests.map((req) =>
+            req.id === id ? { ...req, collectorId, estado: 'assigned' } : req
+          ),
+        }));
+      }
     }),
     {
       name: 'request-store',

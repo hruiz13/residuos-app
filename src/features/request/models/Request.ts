@@ -6,9 +6,10 @@ export class Request {
   localidad: string;
   direccion: string
   tipoResiduo: string;
-  estado: 'pending' | 'in_progress' | 'completed' | 'cancelled';
+  estado: 'pending' | 'in_progress' | 'completed' | 'cancelled' | 'assigned';
   pesoResiduo: number; // in kg
   putosObtenidos: number;
+  collectorId: string;
 
   constructor(
     id: string,
@@ -20,7 +21,8 @@ export class Request {
     tipoResiduo: string,
     estado: 'pending' | 'in_progress' | 'completed' | 'cancelled',
     pesoResiduo: number,
-    putosObtenidos: number
+    putosObtenidos: number,
+    collectorId: string
   ) {
     this.id = id;
     this.userId = userId;
@@ -32,5 +34,6 @@ export class Request {
     this.estado = estado;
     this.pesoResiduo = pesoResiduo;
     this.putosObtenidos = putosObtenidos;
+    this.collectorId = collectorId;
   }
 }
