@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { useRequestStore } from '@/features/request/use_Case/request-store';
 import { useAuthStore } from '@/features/auth/use_case/auth-store';
 

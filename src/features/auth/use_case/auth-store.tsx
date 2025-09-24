@@ -33,6 +33,7 @@ export const useAuthStore = create<AuthState>()(
           });
           return true;
         } catch (error) {
+          console.error(error)
           set({ loginError: "Correo o contraseña inválidos" });
           return false;
         } finally {
@@ -48,7 +49,8 @@ export const useAuthStore = create<AuthState>()(
           }
           set({ registerError: "Error en el registro" });
           return false;
-        } catch (error) {
+        } catch (e) {
+          console.error(e)
           set({ registerError: "Error en el registro" });
           return false;
         } finally {

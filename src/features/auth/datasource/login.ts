@@ -4,12 +4,10 @@ import {User} from '../models/User';
 export async function login(email: string, password: string): Promise<User> {
 
   const localStorageUsers  = localStorage.getItem('r-users') ?? '[]'
-  console.log('🚀 ~ login ~ localStorageUsers:', localStorageUsers)
 
   const allUsers = [...JSON.parse(localStorageUsers), ...users] as User[]
-  console.log('🚀 ~ login ~ allUsers:', allUsers)
 
-  const user = allUsers.find((u: any) => u.email === email && u.password === password);
+  const user = allUsers.find((u) => u.email === email && u.password === password);
 
   if (user) {
     return new User(

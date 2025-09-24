@@ -2,12 +2,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Request } from '@/features/request/models/Request';
 
 const RequestPage = () => {
-  const searchParams = useSearchParams();
   const [requests, setRequests] = useState<Request[]>([]);
   const [filteredRequests, setFilteredRequests] = useState<Request[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -89,7 +87,7 @@ const RequestPage = () => {
     };
 
     loadRequests();
-  }, []);
+  }, [mockRequests]);
 
   useEffect(() => {
     let filtered = requests;
@@ -129,15 +127,6 @@ const RequestPage = () => {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
-    });
-  };
-
-  const formatDateTime = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-CO', {
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
     });
   };
 
@@ -344,23 +333,22 @@ const RequestPage = () => {
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <div className="flex items-center space-x-3 mb-2">
-                          <h3 className="text-lg font-semibold text-gray-900">{request.requestNumber}</h3>
-                          <div className="flex items-center space-x-1">
-                            {getPriorityIcon(request.priority)}
+                          <h3 className="text-lg font-semibold text-gray-900">REQ-{request.id}</h3>
+                          <div className="flex items-center text-sm text-gray-500">
+                            Puntos: {request.putosObtenidos}
                           </div>
                         </div>
                         <div className="flex flex-wrap gap-2 mb-2">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(request.status)}`}>
-                            {request.status === 'pending' && 'Pendiente'}
-                            {request.status === 'confirmed' && 'Confirmada'}
-                            {request.status === 'in-progress' && 'En Progreso'}
-                            {request.status === 'completed' && 'Completada'}
-                            {request.status === 'cancelled' && 'Cancelada'}
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(request.estado)}`}>
+                            {request.estado === 'pending' && 'Pendiente'}
+                            {request.estado === 'in_progress' && 'En Progreso'}
+                            {request.estado === 'completed' && 'Completada'}
+                            {request.estado === 'cancelled' && 'Cancelada'}
                           </span>
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(request.type)}`}>
-                            {request.type === 'organicos' && 'Orgánicos'}
-                            {request.type === 'inorganicos' && 'Inorgánicos'}
-                            {request.type === 'peligrosos' && 'Peligrosos'}
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(request.tipoResiduo)}`}>
+                            {request.tipoResiduo === 'organicos' && 'Orgánicos'}
+                            {request.tipoResiduo === 'inorganicos' && 'Inorgánicos'}
+                            {request.tipoResiduo === 'peligrosos' && 'Peligrosos'}
                           </span>
                         </div>
                       </div>
@@ -370,31 +358,23 @@ const RequestPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                       <div>
                         <p className="font-medium text-gray-500">Ubicación</p>
-                        <p className="text-gray-900">{request.location}</p>
-                        <p className="text-gray-600">{request.address}</p>
+                        <p className="text-gray-900">{request.localidad}</p>
+                        <p className="text-gray-600">{request.direccion}</p>
                       </div>
                       <div>
                         <p className="font-medium text-gray-500">Fecha programada</p>
-                        <p className="text-gray-900">{formatDate(request.scheduledDate)}</p>
-                        <p className="text-gray-600">{request.scheduledTime}</p>
+                        <p className="text-gray-900">{formatDate(request.fecha)}</p>
+                        <p className="text-gray-600">{request.hora}</p>
                       </div>
                       <div>
                         <p className="font-medium text-gray-500">Peso estimado</p>
-                        <p className="text-gray-900">{request.estimatedWeight}</p>
+                        <p className="text-gray-900">{request.pesoResiduo} kg</p>
                       </div>
                       <div>
-                        <p className="font-medium text-gray-500">Creado</p>
-                        <p className="text-gray-900">{formatDateTime(request.createdAt)}</p>
+                        <p className="font-medium text-gray-500">Usuario</p>
+                        <p className="text-gray-900">{request.userId}</p>
                       </div>
                     </div>
-
-                    {request.notes && (
-                      <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-                        <p className="text-sm text-gray-600">
-                          <span className="font-medium">Notas:</span> {request.notes}
-                        </p>
-                      </div>
-                    )}
                   </div>
 
                   {/* Actions */}
@@ -402,7 +382,7 @@ const RequestPage = () => {
                     <button className="px-3 py-2 text-sm font-medium text-green-600 bg-green-50 rounded-lg hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
                       Ver detalles
                     </button>
-                    {request.status === 'pending' && (
+                    {request.estado === 'pending' && (
                       <>
                         <button className="px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
                           Editar
