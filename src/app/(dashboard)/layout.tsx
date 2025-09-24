@@ -1,6 +1,9 @@
+'use client'
+import { useAuthStore } from "@/features/auth/use_case/auth-store";
 import Link from "next/link";
 
 const LayoutDashboard = ({children} : {children: React.ReactNode}) => {
+  const user = useAuthStore(store=>store.user)
   return ( <div>
     <header className="flex justify-between items-center p-4 bg-green-600 text-white font-bold">
       <div className="text-2xl">
@@ -9,7 +12,9 @@ const LayoutDashboard = ({children} : {children: React.ReactNode}) => {
       <div className="space-x-8 mr-8">
         <Link href="/dashboard">Inicio</Link>
         <Link href="/dashboard/schedule">Agendar</Link>
-        <Link href="/dashboard/routes">Rutas</Link>
+        {(user?.role === 'company' || user?.role==='admin') &&
+          <Link href="/dashboard/routes">Rutas</Link>
+        }
         <Link href="/dashboard/reports">Reportes</Link>
         <Link href="/dashboard/profile">Perfil</Link>
       </div>

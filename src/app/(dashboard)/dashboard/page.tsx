@@ -35,7 +35,7 @@ const DashboarPage = () => {
       href: '/dashboard/schedule',
       color: 'text-green-600',
       bgColor: 'bg-green-50 hover:bg-green-100',
-      stats: 'Próxima: Mañana 10:00 AM',
+      stats: 'Programa tu próxima recolección',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 4l2 2m0 0l2-2m-2 2V9m12 0a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V9z" />
@@ -46,7 +46,7 @@ const DashboarPage = () => {
       id: 'history',
       title: 'Historial de Recolecciones',
       description: 'Revisa tu historial completo de recolecciones programadas',
-      href: '/dashboard/history',
+      href: '/dashboard/requests',
       color: 'text-blue-600',
       bgColor: 'bg-blue-50 hover:bg-blue-100',
       stats: '12 recolecciones este mes',
@@ -60,7 +60,7 @@ const DashboarPage = () => {
       id: 'statistics',
       title: 'Estadísticas',
       description: 'Visualiza tu impacto ambiental y estadísticas de reciclaje',
-      href: '/dashboard/statistics',
+      href: '/dashboard/reports',
       color: 'text-purple-600',
       bgColor: 'bg-purple-50 hover:bg-purple-100',
       stats: '85 kg reciclados este año',
@@ -77,7 +77,7 @@ const DashboarPage = () => {
       href: '/dashboard/notifications',
       color: 'text-yellow-600',
       bgColor: 'bg-yellow-50 hover:bg-yellow-100',
-      stats: '3 notificaciones nuevas',
+      stats: '',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM9 17H4l5 5v-5zm6-10V3a2 2 0 00-2-2H8a2 2 0 00-2 2v4h1m0 0h8m-1 0l-4 8-4-8h8z" />
@@ -118,7 +118,7 @@ const DashboarPage = () => {
     {
       title: 'Cancelar recolección',
       description: 'Cancela tu recolección',
-      href: '/dashboard/schedule?quick=today',
+      href: '/dashboard/requests',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />

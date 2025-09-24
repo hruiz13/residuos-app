@@ -259,7 +259,7 @@ const Schedule = () => {
                 errors.localidad ? 'border-red-500' : 'border-gray-300'
               }`}
             >
-              <option value="">Medellín</option>
+              <option value="">Seleccione una opcion</option>
               {localidades.map(localidad => (
                 <option key={localidad} value={localidad}>
                   {localidad}

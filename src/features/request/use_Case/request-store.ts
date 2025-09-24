@@ -19,7 +19,9 @@ export const useRequestStore = create<RequestStoreState>()(
         })),
       cancelRequest: (id) =>
         set((state) => ({
-          requests: state.requests.filter((req) => req.id !== id),
+          requests: state.requests.map((req) =>
+            req.id === id ? { ...req, estado: 'cancelled' } : req
+          ),
         })),
       setPointsRequest: (id, points) =>
         set((state) => ({

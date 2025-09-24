@@ -4,7 +4,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Request } from '@/features/request/models/Request';
-
+import { useRequestStore } from '@/features/request/use_Case/request-store';
+/* 
 const mockRequests: Request[] = [
     new Request(
       '1',
@@ -66,16 +67,14 @@ const mockRequests: Request[] = [
       30,
       18
     )
-  ];
+  ]; */
 
 const RequestPage = () => {
-  const [requests, setRequests] = useState<Request[]>([]);
   const [filteredRequests, setFilteredRequests] = useState<Request[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<string>('all');
-
-  // Mock data - replace with actual API call
+  const {requests, cancelRequest} = useRequestStore()
   
 
   useEffect(() => {
@@ -83,8 +82,6 @@ const RequestPage = () => {
     const loadRequests = async () => {
       setIsLoading(true);
       await new Promise(resolve => setTimeout(resolve, 1000));
-      setRequests(mockRequests);
-      setFilteredRequests(mockRequests);
       setIsLoading(false);
     };
 
@@ -373,23 +370,20 @@ const RequestPage = () => {
                         <p className="text-gray-900">{request.pesoResiduo} kg</p>
                       </div>
                       <div>
-                        <p className="font-medium text-gray-500">Usuario</p>
-                        <p className="text-gray-900">{request.userId}</p>
+                        <p className="font-medium text-gray-500">Puntos obtenidos</p>
+                        <p className="text-gray-900">{request.putosObtenidos}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Actions */}
                   <div className="mt-4 lg:mt-0 lg:ml-6 flex flex-col space-y-2">
-                    <button className="px-3 py-2 text-sm font-medium text-green-600 bg-green-50 rounded-lg hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                    {/* <button className="px-3 py-2 text-sm font-medium text-green-600 bg-green-50 rounded-lg hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
                       Ver detalles
-                    </button>
+                    </button> */}
                     {request.estado === 'pending' && (
                       <>
-                        <button className="px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
-                          Editar
-                        </button>
-                        <button className="px-3 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
+                        <button onClick={()=>cancelRequest(request.id)} className="px-3 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
                           Cancelar
                         </button>
                       </>
