@@ -3,7 +3,10 @@ import users from '@/mock/users.json';
 
 export const setMockData = async (): Promise<User[]> => {
 
-  const data = JSON.stringify(users)
+  const currentUsers = localStorage.getItem('r-users') ?? '[]'
+  const existingUsers = JSON.parse(currentUsers) as User[]
+
+  const data = JSON.stringify([...existingUsers, ...users])
 
   localStorage.setItem('r-users', data)
 

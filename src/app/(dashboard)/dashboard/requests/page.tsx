@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Request } from '@/features/request/models/Request';
 import { useRequestStore } from '@/features/request/use_Case/request-store';
+import { useAuthStore } from '@/features/auth/use_case/auth-store';
 
 const RequestPage = () => {
   const [filteredRequests, setFilteredRequests] = useState<Request[]>([]);
@@ -12,6 +13,8 @@ const RequestPage = () => {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<string>('all');
   const {requests, cancelRequest} = useRequestStore()
+  const {user} = useAuthStore()
+  const myRequests = requests.filter(r => r.userId === user?.id);
 
 
   useEffect(() => {
@@ -26,7 +29,7 @@ const RequestPage = () => {
   }, []);
 
   useEffect(() => {
-    let filtered = requests;
+    let filtered = myRequests;
 
     if (statusFilter !== 'all') {
       filtered = filtered.filter(request => request.estado === statusFilter);
@@ -130,7 +133,7 @@ const RequestPage = () => {
                 <div className="ml-3">
                   <p className="text-sm font-medium text-gray-500">Pendientes</p>
                   <p className="text-lg font-semibold text-gray-900">
-                    {requests.filter(r => r.estado === 'pending').length}
+                    {myRequests.filter(r => r.estado === 'pending').length}
                   </p>
                 </div>
               </div>
@@ -149,7 +152,7 @@ const RequestPage = () => {
                 <div className="ml-3">
                   <p className="text-sm font-medium text-gray-500">Asignadas</p>
                   <p className="text-lg font-semibold text-gray-900">
-                    {requests.filter(r => r.estado === 'assigned').length}
+                    {myRequests.filter(r => r.estado === 'assigned').length}
                   </p>
                 </div>
               </div>
@@ -169,7 +172,7 @@ const RequestPage = () => {
                 <div className="ml-3">
                   <p className="text-sm font-medium text-gray-500">En Progreso</p>
                   <p className="text-lg font-semibold text-gray-900">
-                    {requests.filter(r => r.estado === 'in_progress').length}
+                    {myRequests.filter(r => r.estado === 'in_progress').length}
                   </p>
                 </div>
               </div>
@@ -187,7 +190,7 @@ const RequestPage = () => {
                 <div className="ml-3">
                   <p className="text-sm font-medium text-gray-500">Completadas</p>
                   <p className="text-lg font-semibold text-gray-900">
-                    {requests.filter(r => r.estado === 'completed').length}
+                    {myRequests.filter(r => r.estado === 'completed').length}
                   </p>
                 </div>
               </div>
@@ -205,7 +208,7 @@ const RequestPage = () => {
                 <div className="ml-3">
                   <p className="text-sm font-medium text-gray-500">Canceladas</p>
                   <p className="text-lg font-semibold text-gray-900">
-                    {requests.filter(r => r.estado === 'cancelled').length}
+                    {myRequests.filter(r => r.estado === 'cancelled').length}
                   </p>
                 </div>
               </div>

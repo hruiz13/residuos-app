@@ -1,3 +1,5 @@
+export type Roles = 'admin' | 'user' | 'company' | 'collector';
+
 export class User {
   id: string;
   nombres: string;
@@ -11,7 +13,7 @@ export class User {
 
   email: string;
   password: string;
-  role: 'admin' | 'user' | 'company' | 'collector';
+  role: Roles;
 
   constructor(
     id: string,
@@ -25,7 +27,7 @@ export class User {
     puntosAcumulados: number,
     email: string,
     password: string,
-    role: 'admin' | 'user' | 'company' | 'collector'
+    role: Roles
   ) {
     this.id = id;
     this.nombres = nombres;

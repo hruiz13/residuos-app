@@ -1,10 +1,11 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { login } from '../datasource/login';
-import { User } from '../models/User';
+import { Roles, User } from '../models/User';
 import { register } from '../datasource/register';
 import { getCollectors } from '../datasource/getCollectors';
 import { setMockData } from '../datasource/setMockData';
+import { updateUserRol } from '../datasource/updateUserRol';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -17,12 +18,13 @@ interface AuthState {
   registerError: string | null;
   getCollectors: () => Promise<User[]>;
   users: User[];
-  fillWithMockData?: () => Promise<void>;
+  fillWithMockData: () => Promise<void>;
+  updateUserRol: (userId: string, newRole: Roles) => Promise<boolean>;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       isAuthenticated: false,
       user: null,
       isLoading: false,
@@ -76,7 +78,18 @@ export const useAuthStore = create<AuthState>()(
       fillWithMockData: async () => {
         const mockData = await setMockData()
         set({ users: mockData })
-      }
+      },
+      updateUserRol: async (userId: string, newRole: Roles) => {
+        await updateUserRol(userId, newRole)
+        const updatedUsers: User[] = (get().users ?? [])?.map(user => {
+          if (user.id === userId) {
+            return { ...user, role: newRole }
+          }
+          return user
+        })
+        set({ users: updatedUsers })
+        return true;
+      },
     }),
     {
       name: 'residuos-auth-storage',
@@ -84,6 +97,7 @@ export const useAuthStore = create<AuthState>()(
       partialize: (state) => ({
         isAuthenticated: state.isAuthenticated,
         user: state.user,
+        users: state.users,
       }),
       version: 1,
     }

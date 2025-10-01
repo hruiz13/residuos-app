@@ -16,7 +16,10 @@ const LayoutDashboard = ({children} : {children: React.ReactNode}) => {
           <Link href="/dashboard/routes">Rutas</Link>
         }
         <Link href="/dashboard/reports">Reportes</Link>
-        <Link href="/dashboard/profile">Perfil</Link>
+        {
+          user?.role === 'admin' &&
+        <Link href="/dashboard/profile">Perfiles</Link>
+        }
       </div>
     </header>
     {children}
