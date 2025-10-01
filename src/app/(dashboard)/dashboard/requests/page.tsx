@@ -5,69 +5,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Request } from '@/features/request/models/Request';
 import { useRequestStore } from '@/features/request/use_Case/request-store';
-/* 
-const mockRequests: Request[] = [
-    new Request(
-      '1',
-      'user123',
-      '2024-09-24',
-      '10:00 AM',
-      'Medellín',
-      'Calle 10 #45-23, El Poblado',
-      'organicos',
-      'pending',
-      15,
-      10
-    ),
-    new Request(
-      '2',
-      'user123',
-      '2024-09-24',
-      '11:30 AM',
-      'Bello',
-      'Carrera 80 #52-10, Centro',
-      'inorganicos',
-      'in_progress',
-      25,
-      15
-    ),
-    new Request(
-      '3',
-      'user123',
-      '2024-09-25',
-      '09:00 AM',
-      'Envigado',
-      'Avenida Las Vegas #34-15',
-      'peligrosos',
-      'pending',
-      5,
-      20
-    ),
-    new Request(
-      '4',
-      'user123',
-      '2024-09-26',
-      '10:30 AM',
-      'Itagüí',
-      'Calle 76 #50-32, San Antonio',
-      'organicos',
-      'completed',
-      20,
-      12
-    ),
-    new Request(
-      '5',
-      'user123',
-      '2024-09-23',
-      '02:00 PM',
-      'Medellín',
-      'Carrera 70 #40-25, Laureles',
-      'inorganicos',
-      'completed',
-      30,
-      18
-    )
-  ]; */
 
 const RequestPage = () => {
   const [filteredRequests, setFilteredRequests] = useState<Request[]>([]);
@@ -75,7 +12,7 @@ const RequestPage = () => {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<string>('all');
   const {requests, cancelRequest} = useRequestStore()
-  
+
 
   useEffect(() => {
     // Simulate API loading
@@ -180,7 +117,7 @@ const RequestPage = () => {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
             <div className="bg-white rounded-lg p-4 shadow-sm">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -198,6 +135,27 @@ const RequestPage = () => {
                 </div>
               </div>
             </div>
+            
+            <div className="bg-white rounded-lg p-4 shadow-sm">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 01-8 0m8 0V5a4 4 0 00-8 0v2m8 0a4 4 0 01-8 0m8 0v2a4 4 0 01-8 0V7m8 0a4 4 0 01-8 0" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 17h8m-4-4v4" />
+                    </svg>
+                  </div>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-500">Asignadas</p>
+                  <p className="text-lg font-semibold text-gray-900">
+                    {requests.filter(r => r.estado === 'assigned').length}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+
 
             <div className="bg-white rounded-lg p-4 shadow-sm">
               <div className="flex items-center">

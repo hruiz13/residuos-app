@@ -19,7 +19,7 @@ export class Request {
     localidad: string,
     direccion: string,
     tipoResiduo: string,
-    estado: 'pending' | 'in_progress' | 'completed' | 'cancelled',
+    estado: 'pending' | 'in_progress' | 'completed' | 'cancelled' | 'assigned',
     pesoResiduo: number,
     putosObtenidos: number,
     collectorId: string

@@ -4,6 +4,7 @@ import { login } from '../datasource/login';
 import { User } from '../models/User';
 import { register } from '../datasource/register';
 import { getCollectors } from '../datasource/getCollectors';
+import { setMockData } from '../datasource/setMockData';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -15,6 +16,8 @@ interface AuthState {
   loginError: string | null;
   registerError: string | null;
   getCollectors: () => Promise<User[]>;
+  users: User[];
+  fillWithMockData?: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -25,6 +28,7 @@ export const useAuthStore = create<AuthState>()(
       isLoading: false,
       loginError: null,
       registerError: null,
+      users: [],
       login: async(email, password) => {
         try {
           set({ isLoading: true, loginError: null });
@@ -68,6 +72,10 @@ export const useAuthStore = create<AuthState>()(
         }),
       getCollectors: async() => {
         return await getCollectors()
+      },
+      fillWithMockData: async () => {
+        const mockData = await setMockData()
+        set({ users: mockData })
       }
     }),
     {

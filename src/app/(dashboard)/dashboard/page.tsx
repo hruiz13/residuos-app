@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuthStore } from '@/features/auth/use_case/auth-store';
+import { useRequestStore } from '@/features/request/use_Case/request-store';
 
 interface DashboardCard {
   id: string;
@@ -18,6 +19,8 @@ interface DashboardCard {
 const DashboarPage = () => {
   const { user } = useAuthStore();
   const [currentTime, setCurrentTime] = useState(new Date());
+  const {fillWithMockData} = useRequestStore();
+  const {fillWithMockData: fillUsersWithMockData} = useAuthStore();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -246,6 +249,22 @@ const DashboarPage = () => {
               </div>
             </Link>
           ))}
+        </div>
+
+        {/* Quick Action to fill with mock data */}
+        <div className="mt-8 text-center">
+          <div className="inline-flex items-center space-x-3">
+            <button
+              onClick={() => {
+                fillWithMockData?.();
+                fillUsersWithMockData?.();
+              }}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+            >
+              Llenar con datos de prueba
+            </button>
+            <span className="text-sm text-gray-500">Usa esta acción para llenar la aplicación con datos de prueba.</span>
+          </div>
         </div>
 
         
