@@ -12,6 +12,7 @@ interface FormData {
   email: string;
   tipoIdentificacion: 'cc' | 'nit' | 'pa' | '';
   numeroIdentificacion: string;
+  codigoIndicativo: string;
   celular: string;
   password: string;
   confirmarContraseña: string;
@@ -23,6 +24,7 @@ interface FormErrors {
   email?: string;
   tipoIdentificacion?: string;
   numeroIdentificacion?: string;
+  codigoIndicativo?: string;
   celular?: string;
   password?: string;
   confirmarContraseña?: string;
@@ -36,6 +38,7 @@ const RegisterPage = () => {
     email: '',
     tipoIdentificacion: '',
     numeroIdentificacion: '',
+    codigoIndicativo: '',
     celular: '',
     password: '',
     confirmarContraseña: ''
@@ -84,6 +87,8 @@ const RegisterPage = () => {
 
     if (!formData.tipoIdentificacion) newErrors.tipoIdentificacion = 'Seleccione el tipo de identificación';
     if (!formData.numeroIdentificacion.trim()) newErrors.numeroIdentificacion = 'El número de identificación es requerido';
+
+    if (!formData.codigoIndicativo.trim()) newErrors.codigoIndicativo = 'El código de área es requerido';
     
     if (!formData.celular.trim()) {
       newErrors.celular = 'El número de celular es requerido';
@@ -310,6 +315,26 @@ const RegisterPage = () => {
                 />
                 {errors.numeroIdentificacion && <p className="mt-1 text-sm text-red-600">{errors.numeroIdentificacion}</p>}
               </div>
+            </div>
+
+            {/* Código de área */}
+            <div>
+              <label htmlFor="codigoIndicativo" className="block text-sm font-medium text-gray-700 mb-2">
+                Código de Área *
+              </label>
+              <input
+                id="codigoIndicativo"
+                name="codigoIndicativo"
+                type="text"
+                required
+                value={formData.codigoIndicativo}
+                onChange={handleInputChange}
+                className={`block w-full px-3 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 ${
+                  errors.codigoIndicativo ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Código de área"
+              />
+              {errors.codigoIndicativo && <p className="mt-1 text-sm text-red-600">{errors.codigoIndicativo}</p>}
             </div>
 
             {/* Celular */}
